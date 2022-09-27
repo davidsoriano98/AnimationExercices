@@ -9,10 +9,18 @@ public class AlignmentScript : MonoBehaviour
     public Transform target2;
 	public int exercise = 1;
 
+    //Exercice 2
+    private float angle;
+    private float angleTEMP = 0;
+    private Vector3 axis;
 
-    // Use this for initialization
+
+    //Use this for initialization
     void Start ()
     {
+        //Exercice 2
+        //Save rotation in angle & axis
+        transform.rotation.ToAngleAxis(out angle, out axis);
        
     }
 
@@ -65,8 +73,24 @@ public class AlignmentScript : MonoBehaviour
 
             case 2:
             {
-               
-            } break;
+
+                    //Make target1 align with tracker.
+                    //•Use one line of code(use the quaternion that corresponds to the offset rotation).
+                    //Then, make it align with tracker, but slowly in time.
+                    //•Use method Quaternion.AngleAxis
+                    //•Use method Transform.Rotate
+
+                    //Use the variables save on the start to make the rotation. 
+                    //target1.rotation = Quaternion.AngleAxis(angle, axis); //-> AngleAxis build a quaternion.
+
+                    //Make a smooth transition
+                    if (angleTEMP < angle)
+                    {
+                        target1.rotation = Quaternion.AngleAxis(angleTEMP, axis);
+                        angleTEMP += 0.1f;
+                    }
+                }
+                break;
 
             case 3:
             {
