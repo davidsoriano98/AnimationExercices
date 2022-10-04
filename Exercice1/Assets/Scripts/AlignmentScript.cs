@@ -7,6 +7,7 @@ public class AlignmentScript : MonoBehaviour
 
     public Transform target1;
     public Transform target2;
+    public Transform head;   
 	public int exercise = 1;
 
     //Exercice 2
@@ -14,6 +15,20 @@ public class AlignmentScript : MonoBehaviour
     private float angleTEMP = 0;
     private Vector3 axis;
 
+    //Exercice 3
+    private Quaternion camOffset;
+    private Quaternion headOffset;
+
+    Quaternion Conjugate(Quaternion q1)
+    {
+        Quaternion q2;
+        q2.x = -q1.x;
+        q2.y = -q1.y;
+        q2.z = -q1.z;
+        q2.w = q1.w;
+
+        return q2;
+    }
 
     //Use this for initialization
     void Start ()
@@ -21,6 +36,12 @@ public class AlignmentScript : MonoBehaviour
         //Exercice 2
         //Save rotation in angle & axis
         transform.rotation.ToAngleAxis(out angle, out axis);
+
+        //Exercice 3
+        //Diferencia de quaternions entre camara y objeto
+        camOffset = Camera.main.transform.rotation * Conjugate(transform.rotation);
+
+        headOffset = head.rotation * Conjugate(transform.rotation);
        
     }
 
@@ -94,7 +115,11 @@ public class AlignmentScript : MonoBehaviour
 
             case 3:
             {
-               
+                   //Aplica la rotacion del objeto y luego aplicas offset para moverlo
+                    Camera.main.transform.rotation = camOffset * transform.rotation;
+
+                    head.rotation = transform.rotation * headOffset;
+
             } break;
 
             case 4:
